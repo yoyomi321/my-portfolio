@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>陈冰瑶 - 数据可视化前端开发作品集</title>
+  <style>
+    /* ========== 基础设置 ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0e1a;
+      --bg-card: #111827;
+      --primary: #3b82f6;
+      --primary-light: #60a5fa;
+      --accent: #06b6d4;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ========== 导航栏 ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 14, 26, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 16px 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links a {
+      margin-left: 32px;
+      color: var(--text-muted);
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-light);
+    }
+
+    /* ========== 顶部名片区 ========== */
+    .hero {
+      margin-top: 80px;
+      padding: 100px 24px 80px;
+      text-align: center;
+      background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff, var(--primary-light));
+      background-clip: text;    
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 20px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .hero .info {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .hero .tags {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 8px 20px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 20px;
+      font-size: 14px;
+      color: var(--primary-light);
+    }
+
+    /* ========== 通用容器 ========== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .section-desc {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 60px;
+    }
+
+    /* ========== 关于我 ========== */
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      line-height: 2;
+      color: var(--text-muted);
+    }
+
+    .about-content strong {
+      color: var(--text);
+    }
+
+    /* ========== 项目展示区 ========== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 32px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-body {
+      padding: 28px;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .project-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .project-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-left: 12px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tech-tag {
+      padding: 4px 12px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    /* ========== 技能标签 ========== */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .skill-item {
+      padding: 12px 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .skill-item:hover {
+      border-color: var(--primary);
+      color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* ========== 联系方式 ========== */
+    .contact {
+      text-align: center;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 60px 24px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      color: var(--text-muted);
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+
+    .contact-item:hover {
+      color: var(--primary-light);
+    }
+
+    /* ========== 页脚 ========== */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ========== 滚动动画 ========== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== 手机适配 ========== */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .section {
+        padding: 50px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 导航栏 -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">陈冰瑶.Dev</div>
+      <div class="nav-links">
+        <a href="#about">关于我</a>
+        <a href="#projects">项目作品</a>
+        <a href="#skills">技能</a>
+        <a href="#contact">联系我</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 顶部名片 -->
+  <section class="hero">
+    <h1>陈冰瑶</h1>
+    <p class="subtitle">数据可视化前端开发 | 2027届应届生</p>
+    <p class="info">广东东软学院 · 数字媒体技术 · 佛山</p>
+    <div class="tags">
+      <span class="tag">Vue3</span>
+      <span class="tag">ECharts</span>
+      <span class="tag">Three.js</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">可视化大屏</span>
+    </div>
+  </section>
+
+  <!-- 关于我 -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title fade-in">关于我</h2>
+      <p class="section-desc fade-in">技术 + 设计 的交叉点，是我选择数据可视化的原因</p>
+      <div class="about-content fade-in">
+        <p>
+          我是数字媒体技术专业的<strong>2027届应届生</strong>，专业课程覆盖了前端开发、界面设计、三维建模和虚拟现实技术。
+          这让我既具备<strong>代码能力</strong>，也具备<strong>视觉思维</strong>。
+        </p>
+        <p style="margin-top: 12px;">
+          我主攻<strong>数据可视化前端开发</strong>方向，熟悉 Vue3 + ECharts 技术栈，能独立完成从 UI 设计到前端实现的全流程。
+          在项目中，我不仅关注代码实现，更关注<strong>数据怎么呈现更直观</strong>——比如配色是否对色盲友好、图表联动是否流畅、大屏在不同分辨率下的适配等细节。
+        </p>
+        <p style="margin-top: 12px;">
+          求职意向：<strong>数据可视化前端开发 / 前端开发工程师</strong>，可实习 3 个月以上。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 项目作品 -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title fade-in">项目作品</h2>
+      <p class="section-desc fade-in">3个完整项目，覆盖大屏可视化、B端后台、3D交互</p>
+      
+      <div class="projects-grid">
+        
+        <!-- 项目1：智慧城市大屏 -->
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <img src="images/智慧城市_政务方向_可视化大屏.png" alt="智慧城市可视化大屏">
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">智慧城市可视化大屏</h3>
+              <span class="project-date">2026.01 - 至今</span>
+            </div>
+            <div class="project-tech">
+              <span class="tech-tag">Vue3</span>
+              <span class="tech-tag">ECharts</span>
+              <span class="tech-tag">Element Plus</span>
+              <span class="tech-tag">Vite</span>
+            </div>
+            <p class="project-desc">
+              基于 Vue3 + Vite + ECharts 的实时数据可视化大屏，支持地图下钻、主题切换、实时告警等交互功能。
+            </p>
+            <div class="project-links">
+              <a href="https://dataviz-dashboard.netlify.app/" class="btn btn-primary" target="_blank">🌐 在线预览</a>
+              <a href="https://github.com/yoyomi321/dataviz-dashboard/tree/master" class="btn btn-secondary" target="_blank">💻 查看代码</a>
+              <a href="images/数据大屏视频.gif" class="btn btn-secondary" target="_blank">🎬 演示GIF</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目2：企业运营看板 -->
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <img src="images/数据看板1.png" alt="企业运营数据看板">
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">企业运营数据可视化看板</h3>
+              <span class="project-date">2026.01 - 至今</span>
+            </div>
+            <div class="project-tech">
+              <span class="tech-tag">Vue3</span>
+              <span class="tech-tag">Vue Router</span>
+              <span class="tech-tag">ECharts</span>
+              <span class="tech-tag">Element Plus</span>
+            </div>
+            <p class="project-desc">
+              一个的 B 端数据可视化后台系统，包含登录、路由跳转、数据展示、图表联动、多维筛选等功能。
+            </p>
+            <div class="project-links">
+              <a href="https://dashboard-demo321.netlify.app/" class="btn btn-primary" target="_blank">🌐 在线预览</a>
+              <a href="https://github.com/yoyomi321/dashboard-demo" class="btn btn-secondary" target="_blank">💻 查看代码</a>
+              <a href="images/数据看板视频.gif" class="btn btn-secondary" target="_blank">🎬 演示GIF</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目3：3D销售数据看板 -->
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <img src="images/3D 交互式销售数据可视化看板.png" alt="3D交互式销售数据看板">
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">3D 交互式销售数据可视化看板</h3>
+              <span class="project-date">2026.01 - 至今</span>
+            </div>
+            <div class="project-tech">
+              <span class="tech-tag">Three.js</span>
+              <span class="tech-tag">原生 JavaScript</span>
+              <span class="tech-tag">Vite</span>
+              <span class="tech-tag">WebGL</span>
+            </div>
+            <p class="project-desc">
+              使用 Three.js 构建的 3D 数据展示场景，将销售数据以立体柱状图形式呈现，支持鼠标旋转、缩放、悬停查看详情等交互操作。
+            </p>
+            <div class="project-links">
+              <a href="https://my-3d-project.netlify.app/" class="btn btn-primary" target="_blank">🌐 在线预览</a>
+              <a href="https://github.com/yoyomi321/my-3d-project" class="btn btn-secondary" target="_blank">💻 查看代码</a>
+              <a href="images/3d看板视频.gif" class="btn btn-secondary" target="_blank">🎬 演示GIF</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能 -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-title fade-in">技术栈</h2>
+      <p class="section-desc fade-in">可视化开发核心技能 + 设计能力</p>
+      <div class="skills-grid fade-in">
+        <div class="skill-item">Vue3</div>
+        <div class="skill-item">JavaScript ES6+</div>
+        <div class="skill-item">HTML5 / CSS3</div>
+        <div class="skill-item">ECharts</div>
+        <div class="skill-item">Three.js</div>
+        <div class="skill-item">WebGL</div>
+        <div class="skill-item">Canvas 2D</div>
+        <div class="skill-item">Element Plus</div>
+        <div class="skill-item">Ant Design</div>
+        <div class="skill-item">Git</div>
+        <div class="skill-item">Vite</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系方式 -->
+  <section class="contact" id="contact">
+    <h2 class="section-title">联系我</h2>
+    <p style="color: var(--text-muted); margin-top: 8px;">期待在数据可视化领域持续深耕</p>
+    <div class="contact-links">
+      <span class="contact-item">📧 2558323825@qq.com</span>
+      <span class="contact-item">📱 138-2900-8451</span>
+      <span class="contact-item">📍 广东省佛山市</span>
+      <a href="https://github.com/yoyomi321" class="contact-item" target="_blank">🐙 GitHub</a>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <p>© 2026 陈冰瑶 | 数据可视化前端开发作品集 | 使用 HTML + CSS  handcrafted with ❤️</p>
+  </footer>
+
+  <!-- 滚动动画脚本 -->
+  <script>
+    // 当元素滚动到视口时，添加 visible 类，触发淡入动画
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
